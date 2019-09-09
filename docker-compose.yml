@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:10
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    env_file:
+      - .env
+    ports:
+      - 5432:5432
+
+  service:
+    container_name: transaction_limiter
+    ports:
+      - 7575:7575
+    image: transaction_limiter
+    build:
+      context: .
+      args:
+        develop: 1
+    volumes:
+      - "./transaction_limiter:/service/transaction_limiter"
+      - "./requirements:/service/requirements"
+      - "./tests:/service/tests"
+      - "./shell:/service/shell"
+    stdin_open: true    # flag to allow debugging with pdb
+    tty: true           # flag to allow debugging with pdb
+    user: transaction_limiter
+
+volumes:
+  esdata: {}

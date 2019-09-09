@@ -1,4 +1,4 @@
-from transaction_limiter.application import db
+db = None
 
 
 class User(db.Model):

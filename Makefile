@@ -14,7 +14,7 @@ restart-v: ## remove local images, volumes(postgres/redis) and restart service
 	$(DOCKER_LOCAL) up -d
 
 sh:
-	$(DOCKER_LOCAL) exec $(COLS_LINES) workchain /bin/sh
+	$(DOCKER_LOCAL) exec $(COLS_LINES) transaction_limiter /bin/sh
 
 logs:
 	COMPOSE_HTTP_TIMEOUT=604800 $(DOCKER_LOCAL) logs -f

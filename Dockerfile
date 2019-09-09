@@ -1,10 +1,10 @@
 FROM python:3.7.4-alpine3.9
 
 ARG develop=1
-ARG build_version=0.001
+ARG build_version=0.1
 ENV DEVELOP=1 \
-    BUILD_VERSION=0.001 \
-    USER=workchain \
+    BUILD_VERSION=0.1 \
+    USER=transaction_limiter \
     UID=900 \
     GID=901
 
@@ -17,13 +17,13 @@ RUN addgroup --gid "$GID" "$USER" \
     && chown -R $USER:$USER /service \
     && apk --no-cache add curl mc
 
-COPY transaction_limiter requirements
+COPY requirements requirements
 
 RUN pip install -r requirements/requirements.txt
 
-COPY transaction_limiter workchain
+COPY transaction_limiter transaction_limiter
 COPY tests tests
-COPY configs /etc/workchain
+COPY configs configs
 
 COPY shell shell
 RUN chown -R "$USER":"$USER" /service
@@ -32,4 +32,4 @@ USER "$USER"
 
 EXPOSE 7575
 
-CMD python3 main.py
+CMD python3 transaction_limiter/main.py

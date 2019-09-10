@@ -1,5 +1,8 @@
 # flask_blank_server
-GET: /request/<amount> где amount - какое-то целое число.
+```html
+GET: /request/<amount> 
+```
+где amount - какое-то целое число.
 Конфиг приложения должен содержать 2 параметра:
 
 ```python

@@ -1,6 +1,6 @@
 from time import time
 from datetime import datetime
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, g
 
 
 blue_print = Blueprint('blue_print', __name__)
@@ -8,10 +8,11 @@ blue_print = Blueprint('blue_print', __name__)
 def add_tr(client_id, ts):
     pass
 
+
 def get_curent_tr():
     pass
 
-@blue_print.route('index')
+@blue_print.route('request')
 def show_page():
     ts = time()
     client_id = request.headers.get("client_id")

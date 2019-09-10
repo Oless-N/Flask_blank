@@ -6,23 +6,20 @@ services:
     ports:
       - 5432:5432
 
-  service:
+  transaction_limiter:
+    depends_on:
+      - postgres
     container_name: transaction_limiter
     ports:
-      - 7575:7575
+      - 5050:5050
     image: transaction_limiter
     build:
       context: .
-      args:
-        develop: 1
     volumes:
       - "./transaction_limiter:/service/transaction_limiter"
       - "./requirements:/service/requirements"
       - "./tests:/service/tests"
-      - "./shell:/service/shell"
+      - "./configs:/service/configs"
     stdin_open: true    # flag to allow debugging with pdb
     tty: true           # flag to allow debugging with pdb
     user: transaction_limiter
-
-volumes:
-  esdata: {}

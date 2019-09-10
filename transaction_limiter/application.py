@@ -1,20 +1,19 @@
 import logging
 
 from flask import Flask, jsonify
+from flask_sqlalchemy import SQLAlchemy
 from healthcheck import HealthCheck
 
 from setting import get_config
+from utilites.exceptions import RequestError
 
 logger = logging.getLogger("WEB_API")
 
-from utilites.exceptions import RequestError
-
 app = Flask(__name__)
 app.config.update(get_config()["SERVER"])
+db = SQLAlchemy(app)
 
 health = HealthCheck(app, "/health")
-
-
 
 def load_blueprints():
     from modules.webapi import view

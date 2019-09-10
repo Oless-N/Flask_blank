@@ -13,23 +13,23 @@ WORKDIR /service
 RUN addgroup --gid "$GID" "$USER" \
     && adduser -D -H -u "$UID" "$USER" -G "$USER" \
     && apk add --virtual build-deps gcc python3-dev musl-dev build-base linux-headers \
-    && pip install --upgrade pip setuptools \
+    && pip3 install --upgrade pip setuptools \
     && chown -R $USER:$USER /service \
-    && apk --no-cache add curl mc
+    && apk --no-cache add curl
+
 
 COPY requirements requirements
-
-RUN pip install -r requirements/requirements.txt
-
 COPY transaction_limiter transaction_limiter
 COPY tests tests
 COPY configs configs
 
-COPY shell shell
+RUN pip install -r requirements/requirements.txt
+
 RUN chown -R "$USER":"$USER" /service
 
 USER "$USER"
 
-EXPOSE 7575
+EXPOSE 5050
 
-CMD python3 transaction_limiter/main.py
+ENTRYPOINT ["python3"]
+CMD ["transaction_limiter/main.py"]

@@ -6,7 +6,11 @@ blue_print = Blueprint('blue_print', __name__)
 
 @blue_print.route('index')
 def show_page():
-    return "ok"
+    db.session.add(Transaction(name="Flask", email="example@example.com"))
+    db.session.commit()
+
+    users = Transaction.query.all()
+    return "ok2"
 
 
 def health_database():

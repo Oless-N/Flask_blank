@@ -13,7 +13,7 @@ def get_curent_tr():
     pass
 
 @blue_print.route('request')
-def show_page():
+def show_page(g):
     ts = time()
     client_id = request.headers.get("client_id")
 

@@ -4,7 +4,7 @@ from setting import get_config
 
 if __name__ == '__main__':
     logger.info('Application started', extra={'MESSAGE_ID': "Start API"})
-    app = create_app()
+    app = create_app(get_config())
     print("Routes")
     for rule in app.url_map.iter_rules():
         print(f'http://{get_config()["SERVER"].get("HOST")}:{get_config()["SERVER"].get("PORT")}{rule}')

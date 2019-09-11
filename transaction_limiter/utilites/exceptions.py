@@ -14,13 +14,8 @@ class RequestError(Exception):
         return rv
 
 
-class AmountLimit_10SEC(RequestError):
+class AmountLimit(RequestError):
     status_code = 406
-
-
-class AmountLimit_1MIN(RequestError):
-    status_code = 406
-
 
 class DBObjectError(Exception):
 

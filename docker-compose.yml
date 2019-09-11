@@ -3,6 +3,8 @@ version: '3.7'
 services:
   postgres:
     image: postgres:9.3
+    logging:
+      driver: none
     ports:
       - 5432:5432
 

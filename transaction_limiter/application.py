@@ -1,22 +1,16 @@
-import logging
-
-from flask import Flask, g
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask
 from healthcheck import HealthCheck
+from setting import get_config
+from flask_sqlalchemy import SQLAlchemy
+from modules.view import health_database, blue_print
 
-import view
 
-logger = logging.getLogger("WEB_API")
+app = Flask(__name__)
 
-def create_app(conf):
-    app = Flask(__name__)
-    app.config.update(conf["SERVER"])
-    health = HealthCheck(app, "/health")
-    app.register_blueprint(view.blue_print, url_prefix='/')
+app.config.update(get_config()["SERVER"])
+db = SQLAlchemy(app)
+health = HealthCheck(app, "/health")
+app.register_blueprint(blue_print, url_prefix='/')
 
-    health.add_check(view.health_database)
+health.add_check(health_database)
 
-    with app.app_context():
-        g.db = SQLAlchemy(app)
-
-    return app

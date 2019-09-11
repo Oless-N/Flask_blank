@@ -1,22 +1,22 @@
 from time import time
-from sqlalchemy.orm import session
 
 from application import db
 
 
 class Limiter(db.Model):
+    __tablename__ = 'limiters'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     period = db.Column(db.Integer)
     amount = db.Column(db.Integer)
     timestamp = db.Column(db.Integer)
 
     def __init__(self, period, amount):
-        self._period = period
-        self._amount = amount
-        self._timestamp = time()
+        self.period = period
+        self.amount = amount
+        self.timestamp = time()
 
-def prepare():
-    db.create_all()
+    def __repr__(self):
+        return '<period {}>'.format(self.period)
 
 
 def create_limiter(period, amount):

@@ -12,7 +12,7 @@ WORKDIR /service
 
 RUN addgroup --gid "$GID" "$USER" \
     && adduser -D -H -u "$UID" "$USER" -G "$USER" \
-    && apk add --virtual build-deps gcc python3-dev musl-dev build-base linux-headers \
+    && apk add --virtual build-deps gcc python3-dev musl-dev build-base linux-headers sqlite \
     && pip3 install --upgrade pip setuptools \
     && chown -R $USER:$USER /service \
     && apk --no-cache add curl

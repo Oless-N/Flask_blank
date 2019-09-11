@@ -6,3 +6,5 @@ Flask-SQLAlchemy==2.4.0
 pytest==5.1.2
 py-postgresql==1.2.1
 requests==2.22.0
+Flask-Migrate==1.8.0
+alembic==0.8.5

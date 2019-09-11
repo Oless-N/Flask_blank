@@ -9,16 +9,17 @@ blue_print = Blueprint('blue_print', __name__)
 
 @blue_print.route('request')
 def show_page():
-    from modules.models import prepare
-
+    from modules.models import get_all_limiter, create_limiter
+    r = None
     ts = time()
     client_id = request.headers.get("client_id")
     try:
-        prepare()
+        create_limiter(period=10, amount=1)
+        r = get_all_limiter()
     except Exception as e:
         print("ERROR************", e)
     res = {
-        "result": "OK",
+        "result": str(r),
         "timestamp": datetime.fromtimestamp(ts),
         "client_id": client_id
     }

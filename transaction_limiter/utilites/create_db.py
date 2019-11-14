@@ -12,7 +12,3 @@ def create_connection(db_file):
     finally:
         if conn:
             conn.close()
-
-
-
-

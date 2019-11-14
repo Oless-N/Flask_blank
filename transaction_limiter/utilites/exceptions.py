@@ -10,15 +10,15 @@ class RequestError(Exception):
 
     def to_dict(self):
         rv = dict(self.payload or ())
-        rv['message'] = self.message
+        rv["message"] = self.message
         return rv
 
 
 class AmountLimit(RequestError):
     status_code = 406
 
-class DBObjectError(Exception):
 
+class DBObjectError(Exception):
     def __init__(self, message) -> None:
         super(DBObjectError, self).__init__()
         self.message = message

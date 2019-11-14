@@ -7,4 +7,4 @@ def test_health():
 
     response = requests.request("GET", url)
     assert response.status_code == 200
-    assert  response.json().get("status") == "success"
+    assert response.json().get("status") == "success"

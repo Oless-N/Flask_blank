@@ -19,7 +19,7 @@ db = SQLAlchemy(app)
 def load_blueprints():
     from modules.webapi import view
 
-    app.register_blueprint(view.blue_print, url_prefix='/')
+    app.register_blueprint(view.blue_print, url_prefix="/")
 
     health.add_check(view.health_database)
 
@@ -28,6 +28,7 @@ def print_all_routes():
     print("Routes")
     for rule in app.url_map.iter_rules():
         print(f'http://{SERVER["HOST"]}:{SERVER["PORT"]}{rule}')
+
 
 @app.errorhandler(RequestError)
 def handle_request_error(error):

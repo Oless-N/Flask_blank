@@ -1,6 +1,6 @@
-'''ADD keyword for used in html templates'''
+"""ADD keyword for used in html templates"""
 
-'''
+"""
 
 
 <!--
@@ -12,4 +12,4 @@
     <td class="column5">Malder Fox</td>
     <td class="column6">Junior worker</td>
 </tr>
--->'''
+-->"""

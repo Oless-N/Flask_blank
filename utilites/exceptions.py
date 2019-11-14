@@ -1,5 +1,3 @@
-
-
 class RequestError(Exception):
     status_code = 400
 
@@ -12,7 +10,7 @@ class RequestError(Exception):
 
     def to_dict(self):
         rv = dict(self.payload or ())
-        rv['message'] = self.message
+        rv["message"] = self.message
         return rv
 
 
@@ -21,17 +19,19 @@ class FieldRequired(RequestError):
 
 
 class DBObjectError(Exception):
-
     def __init__(self, message) -> None:
         super(DBObjectError, self).__init__()
         self.message = message
         from modules.webapi.models import Worker
-        self.c_worker = Worker(id=str(None),
-                               salary=-1,
-                               worker_name=str(message),
-                               work_position=str(None),
-                               chif_id=str(None),
-                               beginen_date=str(None))
+
+        self.c_worker = Worker(
+            id=str(None),
+            salary=-1,
+            worker_name=str(message),
+            work_position=str(None),
+            chif_id=str(None),
+            beginen_date=str(None),
+        )
 
 
 class Notauthorized(RequestError):

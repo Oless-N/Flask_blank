@@ -13,7 +13,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
 
     def __repr__(self):
-        return '<User %r>' % self.username
+        return "<User %r>" % self.username
 
 
 class Worker(db.Model):
@@ -25,29 +25,31 @@ class Worker(db.Model):
     chif_id = db.Column(db.String(120))
 
     def get_chif_name(self):
-        return 'chief name'
+        return "chief name"
 
     def __str__(self):
-        return f'{self.worker_name} {self.beginen_date} {self.work_position} {self.salary} {self.get_chif_name()}'
+        return f"{self.worker_name} {self.beginen_date} {self.work_position} {self.salary} {self.get_chif_name()}"
 
 
 def position_maping():
-    pos = {'Accounts': {
-        'Assessor': {
-            'Auditor': {
-                'Bookkeeper': {
-                    'Budget analyst': {
-                        'Cash manager': ['Chief financial officer',
-                                         'Controller',
-                                         'Credit manager',
-                                         'Tax specialist',
-                                         'Treasurer'
-                                         ]
+    pos = {
+        "Accounts": {
+            "Assessor": {
+                "Auditor": {
+                    "Bookkeeper": {
+                        "Budget analyst": {
+                            "Cash manager": [
+                                "Chief financial officer",
+                                "Controller",
+                                "Credit manager",
+                                "Tax specialist",
+                                "Treasurer",
+                            ]
+                        }
                     }
                 }
             }
         }
-    }
     }
 
 
@@ -76,8 +78,8 @@ def get_worker_from_name(*args):
 
 
 def get_chif_name_from_id(id):
-    w:Worker=db.session.query(Worker).filter(Worker.id.in_(id)).all()
-    c:Worker=db.session.query(Worker).filter(Worker.id.in_(w.chif_id)).all()
+    w: Worker = db.session.query(Worker).filter(Worker.id.in_(id)).all()
+    c: Worker = db.session.query(Worker).filter(Worker.id.in_(w.chif_id)).all()
     return c.worker_name
 
 

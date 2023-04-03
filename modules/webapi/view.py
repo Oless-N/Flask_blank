@@ -1,11 +1,9 @@
-from copy import deepcopy
+from flask import Blueprint, send_from_directory
 
-from flask import Blueprint, jsonify, send_from_directory
+from application import db
 
-from application import logger, app, print_all_routes, db
-from middleware import post_required
-from modules.webapi import models
-from modules.webapi.models import Worker, get_all_workers, get_workers_from_id, get_chif_name_from_id
+from modules.webapi.models import (Worker, get_chif_name_from_id,
+                                   get_workers_from_id)
 
 blue_print = Blueprint('blue_print', __name__)
 
@@ -19,7 +17,9 @@ def styles(filename):
 @blue_print.route('index')
 def show_page():
     # rows: list[Worker] = get_all_workers()
-    rows: list[Worker] = get_workers_from_id("774a9334-c15a-42e1-9aa1-f8cf11505dfc")
+    rows: list[Worker] = get_workers_from_id(
+        "774a9334-c15a-42e1-9aa1-f8cf11505dfc",
+        )
     rows_list = []
     with open('modules/webapi/html_template/index.html') as f:
         template_page: str = f.read()
@@ -28,14 +28,14 @@ def show_page():
         with open('modules/webapi/html_template/row.html') as r:
             row_page: str = r.read()
         try:
-            chief=get_chif_name_from_id(worker.chif_id)
+            chief = get_chif_name_from_id(worker.chif_id)
         except Exception as e:
-            chief=str(e)
+            chief = str(e)
         row_page = row_page.replace('{{#Count}', str(len(rows_list) + 1))
         row_page = row_page.replace('{{#Date_of_begin}', worker.beginen_date)
         row_page = row_page.replace('{{#Name}', str(worker.worker_name))
         row_page = row_page.replace('{{#Salary}', str(worker.salary))
-        row_page = row_page.replace('{{#Chief}', str(chief))  # TODO #add getter for name chief
+        row_page = row_page.replace('{{#Chief}', str(chief))  #add getter for name chief # noqa
         row_page = row_page.replace('{{#Position}', str(worker.work_position))
 
         rows_list.append(row_page)

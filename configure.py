@@ -13,7 +13,7 @@ LOGS_PATH = PATH / 'LOG'
 # POSTGRES={
 #     'user': 'postgres',
 #     'password': '',
-#     'db': 'my_database',
+#     'db': 'postgres',
 #     'host': 'localhost',
 #     'port': 32778}
 #

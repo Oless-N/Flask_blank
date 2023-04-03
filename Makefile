@@ -1,6 +1,9 @@
 DOCKER_LOCAL=docker-compose -f docker-compose.yml
 COLS_LINES=-e COLUMNS="`tput cols`" -e LINES="`tput lines`"
 
+root_packages = modules utilites configs tests
+root_modules = application.py configure.py main.py midleware.py
+
 restart:
 	$(DOCKER_LOCAL) stop
 	$(DOCKER_LOCAL) down --rmi local --remove-orphans
@@ -34,4 +37,12 @@ run_docker:
 install_dev:
 	pip install -r requirements.txt
 
+
+lint:
+	$(foreach package,$(root_packages),flake8 --show-source $(package) &&) true
+	$(foreach package,$(root_packages),isort --check-only $(package) --diff &&) true
+	$(foreach file,$(root_modules),isort --check-only $(file) --diff &&) true
+	$(foreach file,$(root_modules),flake8 --show-source $(file) &&) true
+
+	
 .PHONY: shell

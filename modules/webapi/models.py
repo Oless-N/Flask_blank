@@ -1,10 +1,4 @@
-from datetime import datetime
-
-from sqlalchemy.orm import session
-
 from application import db
-from modules.webapi.tests.add_workers import gen_workers
-from utilites.exceptions import DBObjectError
 
 
 class User(db.Model):
@@ -18,21 +12,25 @@ class User(db.Model):
 
 class Worker(db.Model):
     id = db.Column(db.String(120), primary_key=True)
-    salary = db.Column(db.Integer)  # ЗП
-    worker_name = db.Column(db.String(80))  # ПІБ
-    work_position = db.Column(db.String(80))  # посада
-    beginen_date = db.Column(db.String(80))  # Дата приема на работу
+    salary = db.Column(db.Integer)  # salary
+    worker_name = db.Column(db.String(80))  # name
+    work_position = db.Column(db.String(80))  # role
+    beginen_date = db.Column(db.String(80))  # onboarding date
     chif_id = db.Column(db.String(120))
 
     def get_chif_name(self):
         return 'chief name'
 
     def __str__(self):
-        return f'{self.worker_name} {self.beginen_date} {self.work_position} {self.salary} {self.get_chif_name()}'
+        return f'{self.worker_name} ' \
+               f'{self.beginen_date} ' \
+               f'{self.work_position} ' \
+               f'{self.salary} ' \
+               f'{self.get_chif_name()}'
 
 
 def position_maping():
-    pos = {'Accounts': {
+    return {'Accounts': {
         'Assessor': {
             'Auditor': {
                 'Bookkeeper': {
@@ -60,7 +58,9 @@ def get_workers_from_beginen_date(*args):
 
 
 def get_workers_from_work_positiond(*args):
-    return db.session.query(Worker).filter(Worker.work_position.in_(args)).all()
+    return db.session.query(Worker).filter(
+        Worker.work_position.in_(args),
+    ).all()
 
 
 def get_workers_from_salary(*args):
@@ -76,12 +76,11 @@ def get_worker_from_name(*args):
 
 
 def get_chif_name_from_id(id):
-    w:Worker=db.session.query(Worker).filter(Worker.id.in_(id)).all()
-    c:Worker=db.session.query(Worker).filter(Worker.id.in_(w.chif_id)).all()
+    w: Worker = db.session.query(Worker).filter(Worker.id.in_(id)).all()
+    c: Worker = db.session.query(Worker).filter(Worker.id.in_(w.chif_id)).all()
     return c.worker_name
 
 
 def get_all_workers():
-    # workers= [Worker(id=1, salary= 500, worker_name="First Second Name", work_position='jobler' , )]
     workers = Worker.query.all()
     return workers

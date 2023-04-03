@@ -3,11 +3,7 @@ from asyncio import Queue
 from datetime import datetime, timedelta
 from random import randrange
 
-from sqlalchemy import engine
-
 from application import db
-
-# from modules.webapi.models import Worker
 
 sec_names = [
     'Page', 'Larry',
@@ -54,17 +50,24 @@ sec_names = [
 names = [
     'Nabokov', 'Vladimir', 'Nachman', 'Rabbi', 'of Bratzlav', 'Nader', 'Ralph',
     'Nagel', 'Thomas', 'Naidu', 'Richard', 'Nailatikau', 'Adi Koila',
-    'Nailatikau', 'Ratu Epeli Qaraninamu', 'Najimy', 'Kathy', 'Nash', 'John Forbes', 'Nash', 'Thomas',
+    'Nailatikau', 'Ratu Epeli Qaraninamu', 'Najimy', 'Kathy', 'Nash',
+    'John Forbes', 'Nash', 'Thomas',
     'Navakasuasua', 'Maciu',
-    'Negroponte', 'Nicholas', 'Nelson', 'Hailey Anne', 'Nelson', 'Horatio', 'Nero (Emperor)', 'Neruda', 'Pablo',
+    'Negroponte', 'Nicholas', 'Nelson', 'Hailey Anne', 'Nelson', 'Horatio',
+    'Nero (Emperor)', 'Neruda', 'Pablo',
     'Newhart', 'Bob',
-    'Newton', 'Isaac', 'Newton', 'John', 'Nicks', 'Stevie', 'Czar', 'Nicholas II',
-    'Nicoll', 'James', 'Niebuhr', 'Reinhold', 'Niemöller', 'Martin', 'Nietzsche', 'Friedrich', 'Nightingale',
+    'Newton', 'Isaac', 'Newton', 'John', 'Nicks', 'Stevie', 'Czar',
+    'Nicholas II',
+    'Nicoll', 'James', 'Niebuhr', 'Reinhold', 'Niemöller', 'Martin',
+    'Nietzsche', 'Friedrich', 'Nightingale',
     'Florence',
-    'Nijinsky', 'Vaslav', 'Nin', 'Anaïs Nin', 'Ninio', 'Jacques', 'Niranjan', 'Sangeeta', 'Niven', 'Larry',
+    'Nijinsky', 'Vaslav', 'Nin', 'Anaïs Nin', 'Ninio', 'Jacques', 'Niranjan',
+    'Sangeeta', 'Niven', 'Larry',
     'Nixon', 'Richard', 'Noam', 'Eli',
-    'Norton', 'Joshua Abraham', 'Nostradamus', 'Michel', 'de Notredame', 'Novalis',
-    'Nugent', 'Ted', 'Nukem', 'Duke', 'Null', 'Gary', 'Nunally', 'Patrick', 'Nuwas', 'Abu',
+    'Norton', 'Joshua Abraham', 'Nostradamus', 'Michel', 'de Notredame',
+    'Novalis',
+    'Nugent', 'Ted', 'Nukem', 'Duke', 'Null', 'Gary', 'Nunally', 'Patrick',
+    'Nuwas', 'Abu',
 ]
 positions = [
     'Accounts',
@@ -99,10 +102,12 @@ def position_maping():
         }
     }
     }
+    return pos
+
+
 def ger_chief_map():
-
-
     pass
+
 
 queue = Queue(maxsize=50)
 
@@ -116,12 +121,15 @@ def gen_workers():
         if i // 10000 == 0:
             current_chief = str(uuid.uuid4())
 
-        w = Worker(id=str(uuid.uuid4()),
-                   salary=randrange(100, 1200),
-                   worker_name=f'{names[randrange(len(names))]} {sec_names[randrange(len(sec_names))]}',
-                   work_position=f'{positions[randrange(len(positions))]}',
-                   chif_id=current_chief,
-                   beginen_date=f'{datetime.now() - timedelta(randrange(2000))}')
+        w = Worker(
+            id=str(uuid.uuid4()),
+            salary=randrange(100, 1200),
+            worker_name=f'{names[randrange(len(names))]} '
+                        f'{sec_names[randrange(len(sec_names))]}',
+            work_position=f'{positions[randrange(len(positions))]}',
+            chif_id=current_chief,
+            beginen_date=f'{datetime.now() - timedelta(randrange(2000))}',
+        )
         try:
             try:
                 db.session.add(w)

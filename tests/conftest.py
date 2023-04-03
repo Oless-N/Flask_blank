@@ -6,7 +6,10 @@ import pytest
 
 @pytest.fixture
 def _setting():
-    app_conf = os.getenv("BASE_CONFIG_FILE_PATH", "/service/tests/configs/configs.ini")
+    app_conf = os.getenv(
+        "BASE_CONFIG_FILE_PATH",
+        "/service/tests/configs/configs.ini",
+    )
 
     config = configparser.ConfigParser()
     if not config.read([app_conf]):

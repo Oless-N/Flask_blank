@@ -32,6 +32,6 @@ run_docker:
 	docker-compose -f docker-compose.yml up -d
 
 install_dev:
-	pip install -r requirements.txt
+	pip install -r requirements/requirements.txt
 
 .PHONY: shell

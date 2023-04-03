@@ -1,12 +1,14 @@
 version: '3.7'
 
 services:
-#  postgres:
-#    image: postgres:9.3
-#    logging:
-#      driver: none
-#    ports:
-#      - 5432:5432
+  postgres:
+    image: postgres:latest
+    hostname: postgres
+    container_name: postgresql
+    environment:
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5000:5432
 
   transaction_limiter:
 #    depends_on:

@@ -27,4 +27,11 @@ clear:
 	docker ps -a --format "{{ .ID }}" | xargs docker rm -f
 	docker image ls -a --format "{{ .ID }}" | xargs docker rmi -f
 
+run_docker:
+	docker-compose down
+	docker-compose -f docker-compose.yml up -d
+
+install_dev:
+	pip install -r requirements.txt
+
 .PHONY: shell
